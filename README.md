@@ -1,1 +1,1 @@
-PokemonWebApi is an Auth0 protected Api using JWT
+PokemonWebApi is an Auth0 protected web Api using JWT
