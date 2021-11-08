@@ -21,16 +21,16 @@ namespace PokemonWebApi_Auth0.Controllers
 
         // GET: api/<PokemonController>
         [HttpGet]
-        public IEnumerable<Pokemon> Get()
+        public IEnumerable<Pokedex> Get()
         {
-            return _context.pokemons;
+            return _context.Pokedexes.ToList();
         }
 
         // GET api/<PokemonController>/5
         [HttpGet("{id}")]
-        public Pokemon Get(int id)
+        public Pokedex Get(int id)
         {
-            return _context.pokemons.Where(p => p.Id==id).First();
+            return _context.Pokedexes.Where(p => p.Id == id).First();
         }
 
         // POST api/<PokemonController>
@@ -51,4 +51,6 @@ namespace PokemonWebApi_Auth0.Controllers
         {
         }
     }
+    
 }
+

@@ -2,33 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PokemonWebApi_Auth0.Models;
 
 namespace PokemonWebApi_Auth0.Models
 {
-    public class PokemonContext
+    public class PokemonContext : DbContext
     {
-        public List<Pokemon> pokemons;
-        public PokemonContext()
+        public DbSet<Pokedex> Pokedexes { get; set; }
+        public DbSet<Type> Types { get; set; }
+        public DbSet<Ability> Abilities { get; set; }
+        public PokemonContext(DbContextOptions options):base(options)
         {
-            pokemons = new List<Pokemon>
-            {
-                new Pokemon
-                {
-                    Id=1,
-                    name="pokemon1",
-                    type="typ1"
-                },new Pokemon
-                {
-                    Id=1,
-                    name="pokemon2",
-                    type="typ2"
-                },new Pokemon
-                {
-                    Id=1,
-                    name="pokemon3",
-                    type="typ1"
-                }
-            };
+            Database.EnsureCreated();
         }
     }
 }

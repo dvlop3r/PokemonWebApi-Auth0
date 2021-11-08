@@ -15,6 +15,7 @@ using PokemonWebApi_Auth0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokemonWebApi_Auth0
 {
@@ -79,7 +80,11 @@ namespace PokemonWebApi_Auth0
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            services.AddTransient<PokemonContext>();
+            services.AddDbContext<PokemonContext>(options =>
+            {
+                //options.UseNpgsql(Configuration.GetConnectionString("Postgres"));
+                options.UseNpgsql(Configuration.GetConnectionString("Postgres"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
