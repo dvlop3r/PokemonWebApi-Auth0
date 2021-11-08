@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PokemonWebApi_Auth0.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace PokemonWebApi_Auth0
 {
@@ -28,10 +30,52 @@ namespace PokemonWebApi_Auth0
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["Authentication:Domain"];
+                options.Audience = Configuration["Authentication:Audience"];
+            });
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PokemonWebApi_Auth0", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1", Description = "An API that require authentication", });
+
+                //Authorize Swagger to make Api calls
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Implicit = new OpenApiOAuthFlow
+                        {
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "openid", "Open Id" }
+                            },
+                            AuthorizationUrl = new Uri(Configuration["Authentication:Domain"] + "authorize?audience=" + Configuration["Authentication:Audience"])
+                        }
+                    }
+                });
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
+
+            //Add Json serializer to ServiceCollection
+            services.AddSwaggerGenNewtonsoftSupport();
+
+            //No need to use Authorize attribute for each controller
+            services.AddControllers(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                options.Filters.Add(new AuthorizeFilter(policy));
             });
 
             services.AddTransient<PokemonContext>();
@@ -44,13 +88,18 @@ namespace PokemonWebApi_Auth0
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PokemonWebApi_Auth0 v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
+                    c.OAuthClientId(Configuration["Authentication:ClientId"]);
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
