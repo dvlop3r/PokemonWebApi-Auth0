@@ -22,7 +22,6 @@ C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\staticwebassets\PokemonWebApi-Auth0.StaticWebAssets.xml
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\scopedcss\bundle\PokemonWebApi-Auth0.styles.css
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.RazorTargetAssemblyInfo.cache
-C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.csproj.CopyComplete
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.dll
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\ref\PokemonWebApi-Auth0.dll
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.pdb
