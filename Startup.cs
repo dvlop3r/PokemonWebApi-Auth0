@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using PokemonWebApi_Auth0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace PokemonWebApi_Auth0
 {

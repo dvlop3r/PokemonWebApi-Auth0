@@ -26,3 +26,16 @@ C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\ref\PokemonWebApi-Auth0.dll
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.pdb
 C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.genruntimeconfig.cache
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\Swashbuckle.AspNetCore.Newtonsoft.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Administrator.pc-PC\Documents\Dotnet\PokemonWebApi-Auth0\obj\Debug\net5.0\PokemonWebApi-Auth0.csproj.CopyComplete
