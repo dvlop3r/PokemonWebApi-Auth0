@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PokemonWebApi_Auth0.Models;
 
 namespace PokemonWebApi_Auth0
 {
@@ -32,6 +33,8 @@ namespace PokemonWebApi_Auth0
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PokemonWebApi_Auth0", Version = "v1" });
             });
+
+            services.AddTransient<PokemonContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
