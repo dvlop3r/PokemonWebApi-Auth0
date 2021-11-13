@@ -12,9 +12,15 @@ namespace PokemonWebApi_Auth0.Models
         public DbSet<Pokedex> Pokedexes { get; set; }
         public DbSet<Type> Types { get; set; }
         public DbSet<Ability> Abilities { get; set; }
+        public DbSet<PokedexItem> PokemonItems{ get; set; }
         public PokemonContext(DbContextOptions options):base(options)
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
         }
     }
 }

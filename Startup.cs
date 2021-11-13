@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace PokemonWebApi_Auth0
 {
@@ -68,7 +69,7 @@ namespace PokemonWebApi_Auth0
             });
 
             //Add Json serializer to ServiceCollection
-            services.AddSwaggerGenNewtonsoftSupport();
+            //services.AddSwaggerGenNewtonsoftSupport();
 
             //No need to use Authorize attribute for each controller
             services.AddControllers(options =>
@@ -82,7 +83,6 @@ namespace PokemonWebApi_Auth0
 
             services.AddDbContext<PokemonContext>(options =>
             {
-                //options.UseNpgsql(Configuration.GetConnectionString("Postgres"));
                 options.UseNpgsql(Configuration.GetConnectionString("Postgres"));
             });
         }

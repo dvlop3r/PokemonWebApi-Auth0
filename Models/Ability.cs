@@ -9,7 +9,5 @@ namespace PokemonWebApi_Auth0.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public List<Pokedex> Pokedexes { get; set; }
     }
 }

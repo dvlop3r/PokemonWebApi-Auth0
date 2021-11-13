@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,18 +12,17 @@ namespace PokemonWebApi_Auth0.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
-        public List<Type> Types { get; set; }
-        public List<Ability> Ablilites { get; set; }
-
         public double Height { get; set; }
-        public int Evolves_from { get; set; }
-        public int Evolves_to{ get; set; }
-        public string Image_link { get; set; }
+        public string Imagelink { get; set; }
+        public int? EvolvesFromId { get; set; }
+        public int? EvolvesToId { get; set; }
 
+        [ForeignKey("EvolvesFromId")]
+        public Pokedex EvolvesFrom { get; set; }
+        [ForeignKey("EvolvesToId")]
+        public Pokedex EvolvesTo { get; set; }
 
-        
-
-
-
+        public List<Type> Types { get; set; }
+        public List<Ability> Abilities { get; set; }
     }
 }
