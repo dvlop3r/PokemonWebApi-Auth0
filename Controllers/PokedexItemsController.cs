@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -96,10 +97,12 @@ namespace PokemonWebApi_Auth0.Controllers
         [HttpPost]
         public async Task<ActionResult<PokedexItem>> PostPokedexItems(PokedexItemsDtoPost pokedexItemsDtoPost)
         {
+            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
             var pokedexItem = new PokedexItem
             {
                 Id = pokedexItemsDtoPost.Id,
-                //UserId=0,
+                UserId=userId,
                 PokedexId = pokedexItemsDtoPost.PokedexId,
                 Nickname = pokedexItemsDtoPost.Nickname,
                 Birthdate = pokedexItemsDtoPost.Birthdate,
