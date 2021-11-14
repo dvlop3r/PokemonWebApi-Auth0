@@ -7,7 +7,6 @@ namespace PokemonWebApi_Auth0.Models
 {
     public class PokedexItemsDtoPost
     {
-        public int Id { get; set; }
         public int PokedexId { get; set; }
         public string Nickname { get; set; }
         public string Birthdate { get; set; }

@@ -13,6 +13,7 @@ namespace PokemonWebApi_Auth0.Models
         public DbSet<Type> Types { get; set; }
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<PokedexItem> PokemonItems{ get; set; }
+        public DbSet<LatestPokemon> LatestPokemon { get; set; }
         public PokemonContext(DbContextOptions options):base(options)
         {
             Database.EnsureCreated();

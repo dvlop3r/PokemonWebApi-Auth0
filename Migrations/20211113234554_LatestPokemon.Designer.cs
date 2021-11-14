@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PokemonWebApi_Auth0.Models;
@@ -9,9 +10,10 @@ using PokemonWebApi_Auth0.Models;
 namespace PokemonWebApi_Auth0.Migrations
 {
     [DbContext(typeof(PokemonContext))]
-    partial class PokemonContextModelSnapshot : ModelSnapshot
+    [Migration("20211113234554_LatestPokemon")]
+    partial class LatestPokemon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,24 +39,6 @@ namespace PokemonWebApi_Auth0.Migrations
                     b.HasIndex("PokedexId");
 
                     b.ToTable("Abilities");
-                });
-
-            modelBuilder.Entity("PokemonWebApi_Auth0.Models.LatestPokemon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("PokemonId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LatestPokemons");
                 });
 
             modelBuilder.Entity("PokemonWebApi_Auth0.Models.Pokedex", b =>

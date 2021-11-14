@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PokemonWebApi_Auth0.Models;
@@ -25,13 +23,36 @@ namespace PokemonWebApi_Auth0.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Pokedex>> GetPokemonItems()
         {
-            var items = _context.PokemonItems.Include(item => item.Pokedex).Select(item =>
+            string userId = CurrentUser();
+
+            var items = _context.PokemonItems.Where(x => x.UserId == userId || x.State == "public")
+                .Include(item => item.Pokedex).Select(item =>
                 new PokedexItemsDto
                 {
                     Id = item.Id,
-                    //UserId=0,
                     PokedexId = item.PokedexId,
-                    BreedName=item.Pokedex.Name,
+                    BreedName = item.Pokedex.Name,
+                    Nickname = item.Nickname,
+                    Birthdate = item.Birthdate,
+                    Gender = item.Gender,
+                    Image = item.Image,
+                    State = item.State
+                });
+            return Ok(items);
+        }
+        // GET: api/PokedexItems
+        [HttpGet("SpecificBreed")]
+        public ActionResult<IEnumerable<Pokedex>> GetPokemonItems(string name)
+        {
+            string userId = CurrentUser();
+
+            var items = _context.PokemonItems.Where(x => x.UserId == userId || x.State == "public")
+                .Include(item => item.Pokedex).Where(x=>x.Pokedex.Name==name).Select(item =>
+                new PokedexItemsDto
+                {
+                    Id = item.Id,
+                    PokedexId = item.PokedexId,
+                    BreedName = item.Pokedex.Name,
                     Nickname = item.Nickname,
                     Birthdate = item.Birthdate,
                     Gender = item.Gender,
@@ -45,6 +66,7 @@ namespace PokemonWebApi_Auth0.Controllers
         [HttpGet("{id}")]
         public ActionResult<PokedexItem> GetPokedexItems(int id)
         {
+            string userId = CurrentUser();
             var item = _context.PokemonItems.Include(item => item.Pokedex).Select(item =>
                 new PokedexItemsDto
                 {
@@ -64,14 +86,24 @@ namespace PokemonWebApi_Auth0.Controllers
         // PUT: api/PokedexItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPokedexItems(int id, PokedexItem pokedexItems)
+        public async Task<IActionResult> PutPokedexItems(int id, PokedexItemsDtoPost item)
         {
-            if (id != pokedexItems.Id)
-            {
-                return BadRequest();
-            }
+            var pokemon = _context.PokemonItems.Find(id);
+            if (pokemon == null)
+                return NotFound();
 
-            _context.Entry(pokedexItems).State = EntityState.Modified;
+            if (!(pokemon.UserId == CurrentUser() || pokemon.State == "public"))
+                return Unauthorized();
+
+            pokemon.Id = id;
+            pokemon.PokedexId = item.PokedexId;
+            pokemon.Nickname = item.Nickname;
+            pokemon.Birthdate = item.Birthdate;
+            pokemon.Gender = item.Gender;
+            pokemon.Image = item.Image;
+            pokemon.State = item.State;
+
+            _context.Entry(pokemon).State = EntityState.Modified;
 
             try
             {
@@ -85,11 +117,11 @@ namespace PokemonWebApi_Auth0.Controllers
                 }
                 else
                 {
-                    throw;
+                    return NoContent();
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/PokedexItems
@@ -97,11 +129,10 @@ namespace PokemonWebApi_Auth0.Controllers
         [HttpPost]
         public async Task<ActionResult<PokedexItem>> PostPokedexItems(PokedexItemsDtoPost pokedexItemsDtoPost)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            string userId = CurrentUser();
 
             var pokedexItem = new PokedexItem
             {
-                Id = pokedexItemsDtoPost.Id,
                 UserId=userId,
                 PokedexId = pokedexItemsDtoPost.PokedexId,
                 Nickname = pokedexItemsDtoPost.Nickname,
@@ -113,7 +144,13 @@ namespace PokemonWebApi_Auth0.Controllers
             _context.PokemonItems.Add(pokedexItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPokedexItems", new { id = pokedexItemsDtoPost.Id }, pokedexItemsDtoPost);
+            LatestPokemon latestPokemon = _context.LatestPokemon.Where(x => x.UserId == CurrentUser()).First();
+            latestPokemon.PokemonId = pokedexItem.Id;
+            _context.Entry(latestPokemon).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetPokedexItems", new { id = 0 }, pokedexItemsDtoPost);
         }
 
         // DELETE: api/PokedexItems/5
@@ -135,6 +172,10 @@ namespace PokemonWebApi_Auth0.Controllers
         private bool PokedexItemsExists(int id)
         {
             return _context.PokemonItems.Any(e => e.Id == id);
+        }
+        private string CurrentUser()
+        {
+            return User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
         }
     }
 }
